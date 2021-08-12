@@ -53,13 +53,23 @@ def inputMethod():
         inputMethod = input()
         if (inputMethod == 'P' or inputMethod == 'p'):
             print("Please enter the pathname: ")
-            pathname = input()
-            file = open(pathname,"r")
+            while True:
+                try:
+                    pathname = input()
+                    file = open(pathname,"r")
+                    break
+                except:
+                    print("Oops! That was not a valid pathname. Try again...")
             inputDone = True
         elif (inputMethod == 'F' or inputMethod == 'f'):
             print("Please enter the filename: ")
-            filename = input()
-            file = open(filename,"r")
+            while True:
+                try:
+                    filename = input()
+                    file = open(filename,"r")
+                    break
+                except:
+                    print("Oops! That was not a valid Filename. Try again...")
             inputDone = True
         else:
             print("Your input is invalid")
@@ -72,9 +82,8 @@ def inputMethod():
 # variables                                                         #
 # ----------------------------------------------------------------- #
 def populateArray(file):
-    array = np.array(file.readlines())
-    for x in array:
-        x = float(x)
+    arrayTemp = np.array(file.readlines())
+    array = arrayTemp.astype(np.float)
     return array
         
 # ----------------------------------------------------------------- #
@@ -120,25 +129,39 @@ def outlierMethod(array):
 def outlierIQR(number,array):
     # Sort the array read in from text file in ascending order
     sortedArray = np.sort(array)
-    # Use the array size to determine the first and third quartiles
+    # Use the array size to determine the first and third quartile indices
     
-    # Start with the first quartile
-    firstQuartile = (sortedArray.size) * 0.25
-    # Check to see if quartile needs to be rounded up or down
-    if (firstQuartile > (int(firstQuartile) + 0.5)):
-        firstQuartile = int(firstQuartile) + 1
+    # Start with the first quartile index
+    indexQ1 = (sortedArray.size) * 0.25
+    # Check to see if quartile index needs to be rounded up or down
+    if (indexQ1 > (int(indexQ1) + 0.5)):
+        indexQ1 = int(indexQ1) + 1
     else:
-        firstQuartile = int(firstQuartile)
+        indexQ1 = int(indexQ1)
         
-    # Now third quartile
-    thirdQuartile = (sortedArray.size) * 0.75
+    # Now third quartile index
+    indexQ3 = (sortedArray.size) * 0.75
     # Check to see if quartile needs to be rounded up or down
-    if (thirdQuartile > (int(thirdQuartile) + 0.5)):
-        thirdQuartile = int(thirdQuartile) + 1
+    if (indexQ3 > (int(indexQ3) + 0.5)):
+        indexQ3 = int(indexQ3) + 1
     else:
-        thirdQuartile = int(thirdQuartile)
+        indexQ3 = int(indexQ3)
         
-    print (firstQuartile, thirdQuartile)
+    # Calculate IQR
+    firstQuartile = sortedArray[indexQ1]
+    thirdQuartile = sortedArray[indexQ3]
+    IQR = thirdQuartile - firstQuartile
+        
+    # Create and populate an array for outliers
+    # Note: The array is initialized using the third quartile value
+    # This can then be used to see if the array should be 'empty'
+    
+       
+    print("Here is the array of your outliers: ")
+    #if (arrayOutliers[0] = sortedArray[thirdQuartile]):
+     #   print("No outliers in data set")
+    
+    
         
 # ----------------------------------------------------------------- #
 #                   Method outlierSTDV(number)                      #
