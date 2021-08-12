@@ -2,9 +2,10 @@
 
 Program Description
 
-The program inputs a .txt file of values, provided by the user, and outputs the outliers in the data set
-based on either Inter Quartile Range (IQR) or Standard Deviation cutoffs. The file should contain no other information aside from the values
-and each value should be separated by a new line character (\n).
+The program inputs a .txt file of values, provided by the user, and outputs the outliers 
+in the data set based on either Inter Quartile Range (IQR) or Standard Deviation cutoffs. 
+The file should contain no other information aside from the values, each value should be
+separated by a new line character (\n), and there should be at least 10 values.
 
 The user has the ability to enter a pathname or file name as well, whichever is most convient.
 
