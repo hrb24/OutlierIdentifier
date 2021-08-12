@@ -36,6 +36,7 @@ def introductionScreen():
     print("Author: hrb24")
     print("Last edit: 08/12/2021")
     print("This program identifies and outputs any outliers that may be found in a data set")
+    print("Note: Each numeric datum should be on its own line in the .txt file and there should be at least 10 points")
     print("You can connect to the data set of interest via pathname or filename")
 
 # ----------------------------------------------------------------- #
