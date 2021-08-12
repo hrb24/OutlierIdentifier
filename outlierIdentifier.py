@@ -21,8 +21,8 @@ def main():
         # file.close()
        
     file = inputMethod()
-    populateArray(file)
-    outlierMethod()
+    array = populateArray(file)
+    outlierMethod(array)
     file.close()
 
 # ----------------------------------------------------------------- #
@@ -65,17 +65,14 @@ def inputMethod():
 # ----------------------------------------------------------------- #
 #                       Method populateArray                        #
 # This method populates an array with the data from the inputted    #
-# data file                                                         #
+# data file and converts all values from NumPy strings to float     #
+# variables                                                         #
 # ----------------------------------------------------------------- #
 def populateArray(file):
     array = np.array(file.readlines())
-    print("Here is the first element! Should be 20.00: ")
-    print(array[0])
-    print("There are this many elements in the array. Should be 1020: ")
-    print(array.size)
-    print("Now we will print array")
     for x in array:
-        print(x)
+        x = float(x)
+    return array
         
 # ----------------------------------------------------------------- #
 #                       Method outlierMethod()                      #
@@ -83,7 +80,7 @@ def populateArray(file):
 # to use as well as what they want their cutoff (No. of STDV/IQRs)  #
 # to be                                                             #
 # ----------------------------------------------------------------- #
-def outlierMethod():
+def outlierMethod(array):
     outlierDone = False
     print("Next, select how you want to define an outlier. You can use the data's Standard Devation")
     print("or Inter Quartile Range (IQR) to do this")
@@ -93,37 +90,41 @@ def outlierMethod():
         print("I - For Inter Quartile Range")
             
         outlierMethod = input()
-        if (inputMethod == 'S' or inputMethod == 's'):
+        if (outlierMethod == 'S' or outlierMethod == 's'):
             print("Please enter the number of standard deviations away from the mean you would like")
             print("to be consider an outlier: ")
             print("Note: 3 standard deviations is a typical cutoff value")
             number = input()
-            outlierSTDV(number)
+            outlierSTDV(number,array)
             outlierDone = True
-        elif (inputMethod == 'I' or inputMethod == 'i'):
+        elif (outlierMethod == 'I' or outlierMethod == 'i'):
             print("Please enter the number of IQRs away from the first or third quartiles you would like")
             print("to be consider an outlier: ")
             print("Note: 1.5 IQRs is a typical cutoff value")
             number = input
-            outlierIQR(number)
+            outlierIQR(number,array)
             outlierDone = True
         else:
             print("Your input is invalid")
+            
 # ----------------------------------------------------------------- #
-#                   Method outlierIQR(number)                      #
+#                   Method outlierIQR(number)                       #
 # This method is the implementation for identifying outliers using  #
 # the IQR method. The parameter 'number' is the number of IQRs      #
-# above/below the third/first quartile that qualify as an outlier   #
+# above/below the third/first quartile that qualify as an outlier.  #
+# The parameter 'array' is the array of data values                 #
 # ----------------------------------------------------------------- #
-def outlierIQR(number):
+def outlierIQR(number,array):
     # Measure data and output outliers based on IQR approach
-    print("Hello")
-    
+    np.sort(array)
+    for x in array:
+        print(x)
 # ----------------------------------------------------------------- #
 #                   Method outlierSTDV(number)                      #
 # This method is the implementation for identifying outliers using  #
 # the STDV method. The parameter 'number' is the number of STDVs    #
-# above/below the sample mean that qualify as an outlier            #
+# above/below the sample mean that qualify as an outlier. The       #
+# parameter 'array' is the array of data values                     #
 # ----------------------------------------------------------------- #
 def outlierSTDV(number):
     # Measure data and output outliers based on STDV approach
