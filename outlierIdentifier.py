@@ -33,6 +33,8 @@ def main():
 # ----------------------------------------------------------------- #
 def introductionScreen():
     print("Welcome to the Outlier Identifier Program")
+    print("Author: hrb24")
+    print("Last edit: 08/12/2021")
     print("This program identifies and outputs any outliers that may be found in a data set")
     print("You can connect to the data set of interest via pathname or filename")
 
@@ -83,7 +85,7 @@ def populateArray(file):
 def outlierMethod(array):
     outlierDone = False
     print("Next, select how you want to define an outlier. You can use the data's Standard Devation")
-    print("or Inter Quartile Range (IQR) to do this")
+    print("(STDV) or Inter Quartile Range (IQR) to do this")
     while (not outlierDone):
         print("To choose, enter one of the options below: ")
         print("S - For Standard Deviation")
@@ -101,7 +103,7 @@ def outlierMethod(array):
             print("Please enter the number of IQRs away from the first or third quartiles you would like")
             print("to be consider an outlier: ")
             print("Note: 1.5 IQRs is a typical cutoff value")
-            number = input
+            number = input()
             outlierIQR(number,array)
             outlierDone = True
         else:
@@ -115,10 +117,28 @@ def outlierMethod(array):
 # The parameter 'array' is the array of data values                 #
 # ----------------------------------------------------------------- #
 def outlierIQR(number,array):
-    # Measure data and output outliers based on IQR approach
-    np.sort(array)
-    for x in array:
-        print(x)
+    # Sort the array read in from text file in ascending order
+    sortedArray = np.sort(array)
+    # Use the array size to determine the first and third quartiles
+    
+    # Start with the first quartile
+    firstQuartile = (sortedArray.size) * 0.25
+    # Check to see if quartile needs to be rounded up or down
+    if (firstQuartile > (int(firstQuartile) + 0.5)):
+        firstQuartile = int(firstQuartile) + 1
+    else:
+        firstQuartile = int(firstQuartile)
+        
+    # Now third quartile
+    thirdQuartile = (sortedArray.size) * 0.75
+    # Check to see if quartile needs to be rounded up or down
+    if (thirdQuartile > (int(thirdQuartile) + 0.5)):
+        thirdQuartile = int(thirdQuartile) + 1
+    else:
+        thirdQuartile = int(thirdQuartile)
+        
+    print (firstQuartile, thirdQuartile)
+        
 # ----------------------------------------------------------------- #
 #                   Method outlierSTDV(number)                      #
 # This method is the implementation for identifying outliers using  #
@@ -126,7 +146,7 @@ def outlierIQR(number,array):
 # above/below the sample mean that qualify as an outlier. The       #
 # parameter 'array' is the array of data values                     #
 # ----------------------------------------------------------------- #
-def outlierSTDV(number):
+def outlierSTDV(number,array):
     # Measure data and output outliers based on STDV approach
     print("Hello")
     
