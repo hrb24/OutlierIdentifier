@@ -1,5 +1,7 @@
 #This program identifies any outlier data points from a given input file
 
+import numpy as np
+
 def main():
     introductionScreen()
         
@@ -20,7 +22,6 @@ def main():
        
     file = inputMethod()
     populateArray(file)
-    
     outlierMethod()
     file.close()
 
@@ -67,8 +68,14 @@ def inputMethod():
 # data file                                                         #
 # ----------------------------------------------------------------- #
 def populateArray(file):
-    # Not done
-    print("Hello")
+    array = np.array(file.readlines())
+    print("Here is the first element! Should be 20.00: ")
+    print(array[0])
+    print("There are this many elements in the array. Should be 1020: ")
+    print(array.size)
+    print("Now we will print array")
+    for x in array:
+        print(x)
         
 # ----------------------------------------------------------------- #
 #                       Method outlierMethod()                      #
