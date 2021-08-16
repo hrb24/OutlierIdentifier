@@ -1,3 +1,4 @@
+
 #This program identifies any outlier data points from a given input file
 
 import numpy as np
@@ -83,7 +84,7 @@ def inputMethod():
 # ----------------------------------------------------------------- #
 def populateArray(file):
     arrayTemp = np.array(file.readlines())
-    array = arrayTemp.astype(np.float)
+    array = arrayTemp.astype(float)
     return array
         
 # ----------------------------------------------------------------- #
@@ -119,6 +120,12 @@ def outlierMethod(array):
         else:
             print("Your input is invalid")
             
+            
+# ----------------------------------------------------------------- #
+            #                   Method outlierIQR(number)                       #
+            # ----------------------------------------------------------------- #
+            def outlierIQR(number,array):
+            
 # ----------------------------------------------------------------- #
 #                   Method outlierIQR(number)                       #
 # This method is the implementation for identifying outliers using  #
@@ -153,13 +160,26 @@ def outlierIQR(number,array):
     IQR = thirdQuartile - firstQuartile
         
     # Create and populate an array for outliers
+    # Initial array size will be 5% of 'array' parameter array size
+    # Helper function "arrayAdd" will be used here
     # Note: The array is initialized using the third quartile value
     # This can then be used to see if the array should be 'empty'
     
-       
-    print("Here is the array of your outliers: ")
-    #if (arrayOutliers[0] = sortedArray[thirdQuartile]):
-     #   print("No outliers in data set")
+    arrayOutliers = np.zeros(int((array.size)/20))
+    
+    
+    np.array([thirdQuartile], dtype = float)
+    for x in array:
+        if ( x > thirdQuartile + IQR or x < firstQuartile - IQR):
+            np.insert(arrayOutliers, )
+     
+    # Check array size and input correct message for user
+    if (arrayOutliers.size == 1):
+        print("No outliers exist in this data set")
+    else:
+        print("Here is the array of your outliers: ")
+        print(numpy.delete(arrayOutliers, 0))
+    
     
     
         
@@ -172,7 +192,8 @@ def outlierIQR(number,array):
 # ----------------------------------------------------------------- #
 def outlierSTDV(number,array):
     # Measure data and output outliers based on STDV approach
-    print("Hello")
+    standardDeviation = np.std(array)
+    
     
     
 if (__name__ == "__main__"):
