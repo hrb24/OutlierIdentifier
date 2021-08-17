@@ -113,7 +113,7 @@ def outlierMethod(array):
             print("Please enter the number of IQRs away from the first or third quartiles you would like")
             print("to be consider an outlier: ")
             print("Note: 1.5 IQRs is a typical cutoff value")
-            number = input()
+            number = float(input())
             outlierIQR(number,array)
             outlierDone = True
         else:
@@ -128,6 +128,7 @@ def outlierMethod(array):
 # The parameter 'array' is the array of data values                 #
 # ----------------------------------------------------------------- #
 def outlierIQR(number,array):
+    print("Parameter number is: ",number)
     # Sort the array read in from text file in ascending order
     sortedArray = np.sort(array)
     
@@ -149,27 +150,30 @@ def outlierIQR(number,array):
         indexQ3 = int(indexQ3)
         
     # Calculate IQR
-    firstQuartile = sortedArray[indexQ1]
-    thirdQuartile = sortedArray[indexQ3]
+    firstQuartile = float(sortedArray[indexQ1])
+    thirdQuartile = float(sortedArray[indexQ3])
     IQR = thirdQuartile - firstQuartile
+    print("IQR is: ",IQR)
+    print("1st: ", firstQuartile)
+    print("3rd: ", thirdQuartile)
         
     # Create and populate an array for outliers
-    # Initial array size will be 5% of 'array' parameter array size
+    # Initial array size will be 0.5% of 'array' parameter array size plus
+    # one (to avoid this issue of int() rounding down to 0)
     # Note: The array is initialized with random values for time efficiency
 
-    arrayOutliers = np.empty(int((array.size)/20), dtype = 'float')
+    arrayOutliers = np.empty(int((array.size)/200) + 1 , dtype = 'float')
     
     # Use iterator of type int to keep track of index being changed in array
     indexCurrent = 0
     for x in array:
-        if ( x > thirdQuartile + IQR or x < firstQuartile - IQR):
+        if ( x > thirdQuartile + number * IQR or x < firstQuartile - number * IQR):
             if (indexCurrent > arrayOutliers.size - 1):
                 # This means the array needs to be resized before add
                 # Standard choice is to double size
     
                 print("The current array size is: ", arrayOutliers.size)
-                print("arrayOutliers.size * 2 is: ",arrayOutliers.size * 2)
-                arrayOutliers = np.resize(arrayOutliers, 102)
+                arrayOutliers = np.resize(arrayOutliers, arrayOutliers.size * 2)
                 print("The array size is now: ", arrayOutliers.size)
                 arrayOutliers[indexCurrent] = x
                 indexCurrent += 1
