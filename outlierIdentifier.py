@@ -166,9 +166,10 @@ def outlierIQR(number,array):
             if (indexCurrent > arrayOutliers.size - 1):
                 # This means the array needs to be resized before add
                 # Standard choice is to double size
+    
                 print("The current array size is: ", arrayOutliers.size)
                 print("arrayOutliers.size * 2 is: ",arrayOutliers.size * 2)
-                np.resize(arrayOutliers, 102)
+                arrayOutliers = np.resize(arrayOutliers, 102)
                 print("The array size is now: ", arrayOutliers.size)
                 arrayOutliers[indexCurrent] = x
                 indexCurrent += 1
