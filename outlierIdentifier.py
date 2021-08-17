@@ -1,4 +1,3 @@
-
 #This program identifies any outlier data points from a given input file
 
 import numpy as np
@@ -164,21 +163,22 @@ def outlierIQR(number,array):
     indexCurrent = 0
     for x in array:
         if ( x > thirdQuartile + IQR or x < firstQuartile - IQR):
-            if (indexCurrent > arrayOutliers.size()-1 ):
+            if (indexCurrent > arrayOutliers.size - 1):
                 # This means the array needs to be resized before add
                 # Standard choice is to double size
-                print("The current array size is: ", arrayOutliers.size())
-                np.resize(arrayOutliers, (arrayOutliers.size() * 2))
-                print("The array size is now: ", arrayOutliers.size())
+                print("The current array size is: ", arrayOutliers.size)
+                print("arrayOutliers.size * 2 is: ",arrayOutliers.size * 2)
+                np.resize(arrayOutliers, 102)
+                print("The array size is now: ", arrayOutliers.size)
                 arrayOutliers[indexCurrent] = x
                 indexCurrent += 1
             else:
-                print("The current array size is: ", arrayOutliers.size())
+                print("The current array size is: ", arrayOutliers.size)
                 arrayOutliers[indexCurrent] = x
                 indexCurrent += 1
                 
     # Check if values were added and output correct message for user
-    if (indexCurrent = 0):
+    if (indexCurrent == 0):
         print("No outliers exist in this data set. Goodbye!")
     else:
         print("Here is the array of your outliers: ")
