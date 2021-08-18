@@ -106,7 +106,7 @@ def outlierMethod(array):
             print("Please enter the number of standard deviations away from the mean you would like")
             print("to be consider an outlier: ")
             print("Note: 3 standard deviations is a typical cutoff value")
-            number = input()
+            number = float(input())
             outlierSTDV(number,array)
             outlierDone = True
         elif (outlierMethod == 'I' or outlierMethod == 'i'):
@@ -128,7 +128,6 @@ def outlierMethod(array):
 # The parameter 'array' is the array of data values                 #
 # ----------------------------------------------------------------- #
 def outlierIQR(number,array):
-    print("Parameter number is: ",number)
     # Sort the array read in from text file in ascending order
     sortedArray = np.sort(array)
     
@@ -153,10 +152,14 @@ def outlierIQR(number,array):
     firstQuartile = float(sortedArray[indexQ1])
     thirdQuartile = float(sortedArray[indexQ3])
     IQR = thirdQuartile - firstQuartile
-    print("IQR is: ",IQR)
-    print("1st: ", firstQuartile)
-    print("3rd: ", thirdQuartile)
-        
+    
+    print('\n')
+    print("Summary Statistics")
+    print("IQR: ",IQR)
+    print("1st Quartile: ", firstQuartile)
+    print("3rd Quartile: ", thirdQuartile)
+    print('\n')
+    
     # Create and populate an array for outliers
     # Initial array size will be 0.5% of 'array' parameter array size plus
     # one (to avoid this issue of int() rounding down to 0)
@@ -169,16 +172,12 @@ def outlierIQR(number,array):
     for x in array:
         if ( x > thirdQuartile + number * IQR or x < firstQuartile - number * IQR):
             if (indexCurrent > arrayOutliers.size - 1):
-                # This means the array needs to be resized before add
+                # This means the array needs to be resized before add can occur
                 # Standard choice is to double size
-    
-                print("The current array size is: ", arrayOutliers.size)
                 arrayOutliers = np.resize(arrayOutliers, arrayOutliers.size * 2)
-                print("The array size is now: ", arrayOutliers.size)
                 arrayOutliers[indexCurrent] = x
                 indexCurrent += 1
             else:
-                print("The current array size is: ", arrayOutliers.size)
                 arrayOutliers[indexCurrent] = x
                 indexCurrent += 1
                 
@@ -189,8 +188,6 @@ def outlierIQR(number,array):
         print("Here is the array of your outliers: ")
         print(arrayOutliers[0:indexCurrent])
     
-    
-        
 # ----------------------------------------------------------------- #
 #                   Method outlierSTDV(number)                      #
 # This method is the implementation for identifying outliers using  #
@@ -202,7 +199,50 @@ def outlierSTDV(number,array):
     # Measure data and output outliers based on STDV approach
     standardDeviation = np.std(array)
     
+    # Use the array passed into the function to determine the sample mean
+    sampleMean = np.sum(array)/ np.size(array)
+
+    # Calculate upper and lower bounds based on STDV, mean, and number parameter
+    upperLimit = sampleMean + (number * standardDeviation)
+    lowerLimit = sampleMean - (number * standardDeviation)
     
+    print('\n')
+    print("Summary Statistics")
+    print("Sample Mean: ", sampleMean)
+    print("Standard Deviation: ",standardDeviation)
+    print("Upper Cutoff: ", upperLimit)
+    print("Lower Cutoff: ", lowerLimit)
+    print('\n')
+
+    # Create and populate an array for outliers
+    # Initial array size will be 0.5% of 'array' parameter array size plus
+    # one (to avoid this issue of int() rounding down to 0)
+    # Note: The array is initialized with random values for time efficiency
     
+    arrayOutliers = np.empty(int((array.size)/200) + 1 , dtype = 'float')
+
+    # Use iterator of type int to keep track of index being changed in array
+    indexCurrent = 0
+    for x in array:
+        if ( x > upperLimit or x < lowerLimit):
+            if (indexCurrent > arrayOutliers.size - 1):
+                # This means the array needs to be resized before add can occur
+                # Standard choice is to double size
+                arrayOutliers = np.resize(arrayOutliers, arrayOutliers.size * 2)
+                arrayOutliers[indexCurrent] = x
+                indexCurrent += 1
+            else:
+                arrayOutliers[indexCurrent] = x
+                indexCurrent += 1
+
+    # Check if values were added and output correct message for user
+    if (indexCurrent == 0):
+        print("No outliers exist in this data set. Goodbye!")
+    else:
+        print("Here is the array of your outliers: ")
+        print(arrayOutliers[0:indexCurrent])
+
+
+    arrayOutliers = np.empty(int((array.size)/200) + 1 , dtype = 'float')
 if (__name__ == "__main__"):
     main()
